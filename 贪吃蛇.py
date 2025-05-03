@@ -22,7 +22,7 @@ BLACK = (0, 0, 0)
 clock = pygame.time.Clock()
 direction = 'RIGHT'
 score = 0
-target_score = 5
+target_score = 20
 
 
 class Snake:
@@ -58,9 +58,18 @@ class Snake:
             self.positions.pop()
 
     def draw(self):
-        for p in self.positions:
+        for i, p in enumerate(self.positions):
             pygame.draw.rect(screen, GREEN, (p[0], p[1], BLOCK_SIZE, BLOCK_SIZE))
             pygame.draw.rect(screen, BLACK, (p[0], p[1], BLOCK_SIZE, BLOCK_SIZE), 1)
+
+            name = ['l', 'z', 'y']
+            # 仅对前三个方块添加文字
+            if i < 3:
+                font = pygame.font.Font('msyh.ttc', 12)  # 使用与游戏一致的字体
+                text = font.render(name[i], True, (0, 0, 0))  # 黑色文字，显示数字1、2、3
+                # 文字居中显示在方块内
+                text_rect = text.get_rect(center=(p[0] + BLOCK_SIZE // 2, p[1] + BLOCK_SIZE // 2))
+                screen.blit(text, text_rect)
 
 
 class Food:
